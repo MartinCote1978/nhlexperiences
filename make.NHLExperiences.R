@@ -55,28 +55,34 @@ make.NHLExperiences <- function(inLocationFolder) {
   # calculates players numbers of regular season games for each team per year
   # data.frame => season, player, avg #
   CALC_EXPERIENCES_NUM_SEASON <- function() {
-    # TODO: adjust method to sum up - should be only prior seasons to the current season row...
-    #totnumgames_byskatersbyseason <- ddply(skaters_season_reg_overall,
-    #                           .(rk, player, age, team_short, pos, gp, goals, assists, points, goals_created, plus_minus, pim, goals_even, goals_pp, goals_sh, goals_gw, assists_even, assists_sh, assists_pp, shots, shooting_pct, time_on_ice, avg_time_on_ice, season),
-    #                           summarize, num_games_tot = sum(gp))
-    #skaters_season_reg_overall[,c("num_games_tot")] <- transform(apply(skaters_season_reg_overall, 2, FUN=function(x) c(sum(x, na.rm=TRUE))))
-    
+
+    # TODO: Use this function instead to improve performance...  Taking too long right now!!!
+    # Refer to: http://stackoverflow.com/questions/21801111/r-for-each-row-calculate-a-sum-taking-values-of-one-of-the-columns-from-the-rows
     #skaters_season_reg_overall$num_games_tot <- ave(
     #  skaters_season_reg_overall$gp, skaters_season_reg_overall$player,
     #  FUN=function(x) cumsum(c(0, head(x, -1)))
     #)
     
     skaters_season_reg_overall$num_games_tot <- NA
-    sapply(1:nrow(skaters_season_reg_overall), function(i) skaters_season_reg_overall[i, 25] = 
-             sum(subset(skaters_season_reg_overall, skaters_season_reg_overall$player == skaters_season_reg_overall$player[i] & skaters_season_reg_overall$season < skaters_season_reg_overall$season[i])$gp))
-    #totnumgames_bygoaliesbyseason <- ddply(goalies_season_reg_overall,
-    #                           .(rk, player, age, team_short, gp, w, l, tot, ga, sa, sv, sv_pct, gaa, so, min, ga_pct, gsaa, goals, assists, points, pim, season),
-    #                           summarize, num_games_tot = sum(gp))
+    skaters_season_reg_overall$num_games_tot <-
+      sapply(1:nrow(skaters_season_reg_overall),
+             function(i) skaters_season_reg_overall[i, 25] = sum(subset(skaters_season_reg_overall,
+                                                                        skaters_season_reg_overall$player == skaters_season_reg_overall$player[i] & skaters_season_reg_overall$season < skaters_season_reg_overall$season[i])$gp
+                                                                 )
+             )
 
-    avg_numgames_skaters <- ddply(totnumgames_byskatersbyseason, .(season, player, team_short, pos, gp, avg_time_on_ice), summarize, num_games_avg = mean(num_games_tot))
-    avg_numgames_goalies <- ddply(totnumgames_bygoaliesbyseason, .(season, player, team_short, gp), summarize, num_games_avg = mean(num_games_tot))
+    goalies_season_reg_overall$num_games_tot <-NA
+    goalies_season_reg_overall$num_games_tot <-
+      sapply(1:nrow(goalies_season_reg_overall),
+             function(i) goalies_season_reg_overall[i, 23] = sum(subset(goalies_season_reg_overall,
+                                                                        goalies_season_reg_overall$player == goalies_season_reg_overall$player[i] & goalies_season_reg_overall$season < goalies_season_reg_overall$season[i])$gp
+                                                                 )
+             )
+    
+    avg_numgames_skaters <- ddply(skaters_season_reg_overall, .(season, player, team_short, pos, gp, avg_time_on_ice), summarize, num_games_avg = mean(num_games_tot))
+    avg_numgames_goalies <- ddply(goalies_season_reg_overall, .(season, player, team_short, gp), summarize, num_games_avg = mean(num_games_tot))
     avg_numgames_goalies$pos <- "G" # add position to merge with 'skaters'
-    avg_numgames_goalies$avg_time_on_ice <- NULL
+    avg_numgames_goalies$avg_time_on_ice <- 60
     merge(avg_numgames_skaters, avg_numgames_goalies, all=TRUE)
   }
   
@@ -84,6 +90,34 @@ make.NHLExperiences <- function(inLocationFolder) {
   # data.frame => season, team, avg # overall, avg # forward, avg # defense, avg # goalie
   CALC_EXPERIENCES_NUM_PLAYOFF <- function() {
     
+    # TODO: Use this function instead to improve performance...  Taking too long right now!!!
+    # Refer to: http://stackoverflow.com/questions/21801111/r-for-each-row-calculate-a-sum-taking-values-of-one-of-the-columns-from-the-rows
+    #skaters_season_reg_overall$num_games_tot <- ave(
+    #  skaters_season_reg_overall$gp, skaters_season_reg_overall$player,
+    #  FUN=function(x) cumsum(c(0, head(x, -1)))
+    #)
+    
+    skaters_season_playoff_overall$num_games_tot <- NA
+    skaters_season_playoff_overall$num_games_tot <-
+      sapply(1:nrow(skaters_season_playoff_overall),
+             function(i) skaters_season_playoff_overall[i, 25] = sum(subset(skaters_season_playoff_overall,
+                                                                            skaters_season_playoff_overall$player == skaters_season_playoff_overall$player[i] & skaters_season_playoff_overall$season < skaters_season_playoff_overall$season[i])$gp
+             )
+      )
+    
+    goalies_season_playoff_overall$num_games_tot <-NA
+    goalies_season_playoff_overall$num_games_tot <-
+      sapply(1:nrow(goalies_season_playoff_overall),
+             function(i) goalies_season_playoff_overall[i, 18] = sum(subset(goalies_season_playoff_overall,
+                                                                            goalies_season_playoff_overall$player == goalies_season_playoff_overall$player[i] & goalies_season_playoff_overall$season < goalies_season_playoff_overall$season[i])$gp
+             )
+      )
+    
+    avg_numgames_skaters <- ddply(skaters_season_playoff_overall, .(season, player, team_short, pos, gp, avg_time_on_ice), summarize, num_games_avg = mean(num_games_tot))
+    avg_numgames_goalies <- ddply(goalies_season_playoff_overall, .(season, player, team_short, gp), summarize, num_games_avg = mean(num_games_tot))
+    avg_numgames_goalies$pos <- "G" # add position to merge with 'skaters'
+    avg_numgames_goalies$avg_time_on_ice <- 60
+    merge(avg_numgames_skaters, avg_numgames_goalies, all=TRUE)
   }
   
   

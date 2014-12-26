@@ -24,4 +24,10 @@ avg_age_byteam_bypos <- ddply(avg_age, .(season, team_short, pos), summarize, ag
 avg_games_byplayer_all <- calcExpNumSeason()
 # TODO: Remove the non-regular players?  Should I?  What's the criteria: < 10 gp & < 5 avg_time_on_ice ?
 
-avgmed_games_byteambyseason <- ddply(avg_games_byplayer_all, .(season, team_short), summarize, games_avg = mean(num_games_avg, na.rm = TRUE),games_median = median(num_games_avg, na.rm = TRUE))
+avgmed_games_byteambyseason <- ddply(avg_games_byplayer_all, .(season, team_short), summarize, games_avg = mean(num_games_avg, na.rm = TRUE), games_median = median(num_games_avg, na.rm = TRUE))
+
+# 3. with numbers of regular seasons games...
+avg_playoff_byplayer_all <- calcExpNumPlayoff()
+# TODO: Remove the non-regular players?  Should I?  What's the criteria in this case?!?
+
+avgmed_playoff_byteambyseason <- ddply(avg_playoff_byplayer_all, .(season, team_short), summarize, games_avg = mean(num_games_avg, na.rm = TRUE), games_median = median(num_games_avg, na.rm = TRUE))
