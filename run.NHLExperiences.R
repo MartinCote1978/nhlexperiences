@@ -7,6 +7,7 @@ stanleycup_winners <- read.csv("C:/Users/martin.cote/Documents/GitHub/nhlstats/s
 
 # prep functions
 inLocationFolder <- "C:/Users/martin.cote/Documents/GitHub/nhlstats/data"
+inLocationFolder <- "/Users/martincote/Documents/github-repo/nhlstats/data"
 nhlExperiencesFunc <- make.NHLExperiences(inLocationFolder)
 calcExpAges <- nhlExperiencesFunc$calculatesExperiencesWithAge
 calcExpNumSeason <- nhlExperiencesFunc$calculatesExperiencesWithSeason
@@ -21,13 +22,13 @@ avg_age_byteam_all <- ddply(avg_age, .(season, team_short), summarize, age = mea
 avg_age_byteam_bypos <- ddply(avg_age, .(season, team_short, pos), summarize, age = mean(age_avg, na.rm = TRUE))
 
 # 2. with numbers of regular seasons games...
-avg_games_byplayer_all <- calcExpNumSeason()
+system.time(avg_games_byplayer_all <- calcExpNumSeason())
 # TODO: Remove the non-regular players?  Should I?  What's the criteria: < 10 gp & < 5 avg_time_on_ice ?
 
 avgmed_games_byteambyseason <- ddply(avg_games_byplayer_all, .(season, team_short), summarize, games_avg = mean(num_games_avg, na.rm = TRUE), games_median = median(num_games_avg, na.rm = TRUE))
 
 # 3. with numbers of regular seasons games...
-avg_playoff_byplayer_all <- calcExpNumPlayoff()
+system.time(avg_playoff_byplayer_all <- calcExpNumPlayoff())
 # TODO: Remove the non-regular players?  Should I?  What's the criteria in this case?!?
 
 avgmed_playoff_byteambyseason <- ddply(avg_playoff_byplayer_all, .(season, team_short), summarize, games_avg = mean(num_games_avg, na.rm = TRUE), games_median = median(num_games_avg, na.rm = TRUE))
