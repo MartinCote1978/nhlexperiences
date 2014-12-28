@@ -1,14 +1,31 @@
 # Run NHL experiences...
+#
+# Usage:
+# 1. Load data files
+# 2. Establish winning team for each year
+# 3. Establish:
+#     3.1 Average age by overall, forward, defense and goalie for each team and winning team.
+#     3.2 Average number of games played in regular season by overall, foward, defense and goalie
+#         for each team and winning team.
+#     3.3 Average number of games played in playoff by overall, forward, defense and goalie
+#         for each team and winning team.
+# 4. Establish correlation/causation (if applicable)
+#------------------------------------------------------------------------------
+
+
 
 # load source
+setwd("~/GitHub/nhlexperiences")
 source("make.NHLExperiences.R")
 
-stanleycup_winners <- read.csv("C:/Users/martin.cote/Documents/GitHub/nhlstats/stanleycupwinners.csv", header=TRUE)
-stanleycup_winners <- read.csv("/Users/martincote/Documents/github-repo/nhlstats/stanleycupwinners.csv", header=TRUE)
+stanleycup_winners <- read.csv("~/GitHub/nhlstats/stanleycupwinners.csv", header=TRUE)
+#stanleycup_winners <- read.csv("C:/Users/martin.cote/Documents/GitHub/nhlstats/stanleycupwinners.csv", header=TRUE)
+#stanleycup_winners <- read.csv("/Users/martincote/Documents/github-repo/nhlstats/stanleycupwinners.csv", header=TRUE)
 
 # prep functions
-inLocationFolder <- "C:/Users/martin.cote/Documents/GitHub/nhlstats/data"
-inLocationFolder <- "/Users/martincote/Documents/github-repo/nhlstats/data"
+inLocationFolder <- "~/GitHub/nhlstats/data"
+#inLocationFolder <- "C:/Users/martin.cote/Documents/GitHub/nhlstats/data"
+#inLocationFolder <- "/Users/martincote/Documents/github-repo/nhlstats/data"
 nhlExperiencesFunc <- make.NHLExperiences(inLocationFolder)
 calcExpAges <- nhlExperiencesFunc$calculatesExperiencesWithAge
 calcExpNumSeason <- nhlExperiencesFunc$calculatesExperiencesWithSeason

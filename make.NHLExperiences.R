@@ -9,16 +9,6 @@
 # Pre-requisites:
 # 1. Data loaded required from hockey_databank processed.
 #
-# Usage:
-# 1. Load data files
-# 2. Establish winning team for each year
-# 3. Establish:
-#     3.1 Average age by overall, forward, defense and goalie for each team and winning team.
-#     3.2 Average number of games played in regular season by overall, foward, defense and goalie
-#         for each team and winning team.
-#     3.3 Average number of games played in playoff by overall, forward, defense and goalie
-#         for each team and winning team.
-# 4. Establish correlation/causation (if applicable)
 #------------------------------------------------------------------------------
 #
 
