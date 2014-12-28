@@ -4,6 +4,7 @@
 source("make.NHLExperiences.R")
 
 stanleycup_winners <- read.csv("C:/Users/martin.cote/Documents/GitHub/nhlstats/stanleycupwinners.csv", header=TRUE)
+stanleycup_winners <- read.csv("/Users/martincote/Documents/github-repo/nhlstats/stanleycupwinners.csv", header=TRUE)
 
 # prep functions
 inLocationFolder <- "C:/Users/martin.cote/Documents/GitHub/nhlstats/data"
