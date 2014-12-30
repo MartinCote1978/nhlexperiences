@@ -42,7 +42,7 @@ df # Error: cumsum is done in reversed order, which is incorrect.
 # 6        A        6        0         35
 
 df$dataColTst <- ave(df$dataCol2, df$dataCol1, FUN=function(x) rev(cumsum(c(0, head(rev(x), -1)))))
-df # THIS ONE IS CORRECT!!!
+df # THIS ONE IS CORRECT!!!  I would probably need to undestand why the 2 'rev' are required though...??
 #       dataCol1 dataCol2 dataCol3 dataColTst
 # 1        A       12        1         29
 # 2        A       23        0          6
@@ -50,5 +50,3 @@ df # THIS ONE IS CORRECT!!!
 # 4        C       45        1          0
 # 5        B       10        0          0
 # 6        A        6        0          0
-
-

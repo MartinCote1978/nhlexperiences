@@ -43,30 +43,13 @@ make.NHLExperiences <- function(inLocationFolder) {
   }
   
   # calculates players numbers of regular season games for each team per year
-  # data.frame => season, player, avg #
+  # data.frame => season, player, pos, avg_time_on_ice, avg #
   CALC_EXPERIENCES_NUM_SEASON <- function() {
 
     # Refer to: http://stackoverflow.com/questions/21801111/r-for-each-row-calculate-a-sum-taking-values-of-one-of-the-columns-from-the-rows
     # and research file unittest.NHLExperiences.R
     skaters_season_reg_overall$num_games_tot <- ave(skaters_season_reg_overall$gp, skaters_season_reg_overall$player, FUN=function(x) rev(cumsum(c(0, head(rev(x), -1)))))
     goalies_season_reg_overall$num_games_tot <- ave(goalies_season_reg_overall$gp, goalies_season_reg_overall$player, FUN=function(x) rev(cumsum(c(0, head(rev(x), -1)))))
-    
-    # OLD functions - too slow compared the previous line of code
-    #skaters_season_reg_overall$num_games_tot <- NA
-    #skaters_season_reg_overall$num_games_tot <-
-    #  sapply(1:nrow(skaters_season_reg_overall),
-    #         function(i) skaters_season_reg_overall[i, 25] = sum(subset(skaters_season_reg_overall,
-    #                                                                    skaters_season_reg_overall$player == skaters_season_reg_overall$player[i] & skaters_season_reg_overall$season < skaters_season_reg_overall$season[i])$gp
-    #                                                             )
-    #         )
-
-    #goalies_season_reg_overall$num_games_tot <-NA
-    #goalies_season_reg_overall$num_games_tot <-
-    #  sapply(1:nrow(goalies_season_reg_overall),
-    #         function(i) goalies_season_reg_overall[i, 23] = sum(subset(goalies_season_reg_overall,
-    #                                                                    goalies_season_reg_overall$player == goalies_season_reg_overall$player[i] & goalies_season_reg_overall$season < goalies_season_reg_overall$season[i])$gp
-    #                                                             )
-    #         )
     
     avg_numgames_skaters <- ddply(skaters_season_reg_overall, .(season, player, team_short, pos, gp, avg_time_on_ice), summarize, num_games_avg = mean(num_games_tot))
     avg_numgames_goalies <- ddply(goalies_season_reg_overall, .(season, player, team_short, gp), summarize, num_games_avg = mean(num_games_tot))
@@ -76,29 +59,13 @@ make.NHLExperiences <- function(inLocationFolder) {
   }
   
   # calculates players numbers of playoff games for each team per year
-  # data.frame => season, team, avg # overall, avg # forward, avg # defense, avg # goalie
+  # data.frame => season, player, pos, avg_time_on_ice, avg #
   CALC_EXPERIENCES_NUM_PLAYOFF <- function() {
     
     # Refer to: http://stackoverflow.com/questions/21801111/r-for-each-row-calculate-a-sum-taking-values-of-one-of-the-columns-from-the-rows
     # and research file unittest.NHLExperiences.R
     skaters_season_playoff_overall$num_games_tot <- ave(skaters_season_playoff_overall$gp, skaters_season_playoff_overall$player, FUN=function(x) rev(cumsum(c(0, head(rev(x), -1)))))
     goalies_season_playoff_overall$num_games_tot <- ave(goalies_season_playoff_overall$gp, goalies_season_playoff_overall$player, FUN=function(x) rev(cumsum(c(0, head(rev(x), -1)))))
-    
-    #skaters_season_playoff_overall$num_games_tot <- NA
-    #skaters_season_playoff_overall$num_games_tot <-
-    #  sapply(1:nrow(skaters_season_playoff_overall),
-    #         function(i) skaters_season_playoff_overall[i, 25] = sum(subset(skaters_season_playoff_overall,
-    #                                                                        skaters_season_playoff_overall$player == skaters_season_playoff_overall$player[i] & skaters_season_playoff_overall$season < skaters_season_playoff_overall$season[i])$gp
-    #         )
-    #  )
-    
-    #goalies_season_playoff_overall$num_games_tot <-NA
-    #goalies_season_playoff_overall$num_games_tot <-
-    #  sapply(1:nrow(goalies_season_playoff_overall),
-    #         function(i) goalies_season_playoff_overall[i, 18] = sum(subset(goalies_season_playoff_overall,
-    #                                                                        goalies_season_playoff_overall$player == goalies_season_playoff_overall$player[i] & goalies_season_playoff_overall$season < goalies_season_playoff_overall$season[i])$gp
-    #         )
-    #  )
     
     avg_numgames_skaters <- ddply(skaters_season_playoff_overall, .(season, player, team_short, pos, gp, avg_time_on_ice), summarize, num_games_avg = mean(num_games_tot))
     avg_numgames_goalies <- ddply(goalies_season_playoff_overall, .(season, player, team_short, gp), summarize, num_games_avg = mean(num_games_tot))
