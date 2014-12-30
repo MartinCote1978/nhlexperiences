@@ -15,15 +15,15 @@
 
 
 # load source
-setwd("~/GitHub/nhlexperiences")
+setwd("~/Documents/github-repo/nhlexperiences")
 source("make.NHLExperiences.R")
 
-stanleycup_winners <- read.csv("~/GitHub/nhlstats/stanleycupwinners.csv", header=TRUE)
+stanleycup_winners <- read.csv("~/github-repo/nhlstats/stanleycupwinners.csv", header=TRUE)
 #stanleycup_winners <- read.csv("C:/Users/martin.cote/Documents/GitHub/nhlstats/stanleycupwinners.csv", header=TRUE)
 #stanleycup_winners <- read.csv("/Users/martincote/Documents/github-repo/nhlstats/stanleycupwinners.csv", header=TRUE)
 
 # prep functions
-inLocationFolder <- "~/GitHub/nhlstats/data"
+inLocationFolder <- "~/Documents/github-repo/nhlstats/data"
 #inLocationFolder <- "C:/Users/martin.cote/Documents/GitHub/nhlstats/data"
 #inLocationFolder <- "/Users/martincote/Documents/github-repo/nhlstats/data"
 nhlExperiencesFunc <- make.NHLExperiences(inLocationFolder)
