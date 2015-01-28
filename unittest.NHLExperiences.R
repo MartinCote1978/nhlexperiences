@@ -4,7 +4,8 @@
 dataCol1 <- c('A','A','B','C','B','A')
 dataCol2 <- c(12, 23, 12, 45, 10, 6)
 dataCol3 <- c(1, 0, 1, 1, 0, 0)
-df <- data.frame(dataCol1, dataCol2, dataCol3)
+df <- data.frame(dataCol1, dataCol2, dataCol3) # To create a data.frame; use cbind to create a matrix.
+# Used data.frame since containing different classes of objects in this case (classes used are integer and characters)
 
 df
 #       dataCol1 dataCol2 dataCol3

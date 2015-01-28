@@ -15,7 +15,7 @@
 
 
 # load source
-setwd("~/Documents/github-repo/nhlexperiences")
+#setwd("~/Documents/github-repo/nhlexperiences")
 source("make.NHLExperiences.R")
 
 stanleycup_winners <- read.csv("~/github-repo/nhlstats/stanleycupwinners.csv", header=TRUE)
@@ -23,8 +23,8 @@ stanleycup_winners <- read.csv("~/github-repo/nhlstats/stanleycupwinners.csv", h
 #stanleycup_winners <- read.csv("/Users/martincote/Documents/github-repo/nhlstats/stanleycupwinners.csv", header=TRUE)
 
 # prep functions
-inLocationFolder <- "~/Documents/github-repo/nhlstats/data"
-#inLocationFolder <- "C:/Users/martin.cote/Documents/GitHub/nhlstats/data"
+#inLocationFolder <- "~/Documents/github-repo/nhlstats/data"
+inLocationFolder <- "C:/Users/martin.cote/Documents/github-repo/nhlstats/data"
 #inLocationFolder <- "/Users/martincote/Documents/github-repo/nhlstats/data"
 nhlExperiencesFunc <- make.NHLExperiences(inLocationFolder)
 calcExpAges <- nhlExperiencesFunc$calculatesExperiencesWithAge
@@ -32,6 +32,8 @@ calcExpNumSeason <- nhlExperiencesFunc$calculatesExperiencesWithSeason
 calcExpNumPlayoff <- nhlExperiencesFunc$calculatesExperiencesWithPlayoff
 
 # experiments...
+# TODO: Should I use 'complete.cases' instead of using the 'na.rm=TRUE'?  To be investigated!
+
 # 1. with age...
 avg_age <- calcExpAges()
 
